@@ -1,6 +1,6 @@
 import React from 'react';
 
-const WeatherCard: React.FC = () => {
+const WeatherCard = () => {
   return (
     <div>
       <h2>Weather Forecast</h2>

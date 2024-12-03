@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
     <header>
-      <h1>Fishing Booking App!</h1>
+      <h1>Fishing Booking App</h1>
     </header>
   );
 };

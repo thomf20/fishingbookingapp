@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface BoatCardProps {
+type BoatCardProps = {
   name: string;
   description: string;
-}
+};
 
-const BoatCard: React.FC<BoatCardProps> = ({ name, description }) => {
+const BoatCard = ({ name, description }: BoatCardProps) => {
   return (
     <div>
       <h3>{name}</h3>

@@ -8,7 +8,7 @@ const boats = [
   { name: 'Deep Diver', description: 'Explore the deep seas.' },
 ];
 
-const BoatList: React.FC = () => {
+const BoatList = () => {
   return (
     <div>
       {boats.map((boat, index) => (
