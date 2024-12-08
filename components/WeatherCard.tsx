@@ -1,21 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { fetchWeatherForecast } from '../lib/fetchWeather';
 
-const WeatherCard = () => {
-  const [forecast, setForecast] = useState<any[]>([]);
+// Definiera typer för väderdata
+interface WeatherEntry {
+  dt_txt: string; 
+  main: {
+    temp: number; 
+  };
+  wind: {
+    speed: number; 
+  };
+}
+
+interface WeatherData {
+  list: WeatherEntry[]; // Lista över väderprognoser
+}
+
+const WeatherCard: React.FC = () => {
+  const [forecast, setForecast] = useState<WeatherEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getForecast = async () => {
       try {
-        const data = await fetchWeatherForecast();
+        const data: WeatherData = await fetchWeatherForecast();
 
         // Hämta dagens datum
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Nollställ tid för att matcha bara datum
 
         // Filtrera prognosdata och säkerställ att "idag" inkluderas
-        const dailyForecast = data.list.filter((entry: any) => {
+        const dailyForecast = data.list.filter((entry: WeatherEntry) => {
           const entryDate = new Date(entry.dt_txt);
           entryDate.setHours(0, 0, 0, 0);
           return entryDate >= today; // Inkludera från idag och framåt
@@ -23,8 +38,8 @@ const WeatherCard = () => {
 
         // Ta de första 4 dagarna
         setForecast(dailyForecast.slice(0, 4));
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        setError((err as Error).message); // Använd "Error" typ
       }
     };
 
@@ -44,7 +59,7 @@ const WeatherCard = () => {
     const fallbackDate = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
 
-    // Första två dagarna: använd "Idag" och "Imorgon" med datum
+    // Första två dagarna: använd "Today" och "Tomorrow" med datum
     if (index < days.length) {
       return `${days[index]} (${fallbackDate.toLocaleDateString('sv-SE', options)})`;
     }
@@ -59,7 +74,7 @@ const WeatherCard = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh', 
+        height: '100vh',
       }}
     >
       <div
@@ -73,7 +88,7 @@ const WeatherCard = () => {
       >
         <h2>4-Day Forecast for Lake Måsnaren</h2>
         {forecast.map((day, index) => (
-          <div key={day.dt} style={{ marginBottom: '10px' }}>
+          <div key={day.dt_txt} style={{ marginBottom: '10px' }}>
             <p>{formatDate(day.dt_txt, index)}</p>
             <p>Temperature: {day.main.temp.toFixed(1)}°C</p>
             <p>Wind Speed: {day.wind.speed.toFixed(1)} m/s</p>
@@ -82,7 +97,6 @@ const WeatherCard = () => {
       </div>
     </div>
   );
-  
 };
 
 export default WeatherCard;
