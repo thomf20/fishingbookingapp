@@ -40,7 +40,7 @@ const WeatherCard = () => {
   }
 
   const formatDate = (dateString: string, index: number) => {
-    const days = ['Idag', 'Imorgon'];
+    const days = ['Today', 'Tomorrow'];
     const fallbackDate = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
 
@@ -54,17 +54,35 @@ const WeatherCard = () => {
   };
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px', maxWidth: '300px' }}>
-      <h2>4-Day Forecast for Lake Måsnaren</h2>
-      {forecast.map((day, index) => (
-        <div key={day.dt} style={{ marginBottom: '10px' }}>
-          <p>{formatDate(day.dt_txt, index)}</p>
-          <p>Temperature: {day.main.temp.toFixed(1)}°C</p>
-          <p>Wind Speed: {day.wind.speed.toFixed(1)} m/s</p>
-        </div>
-      ))}
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh', 
+      }}
+    >
+      <div
+        style={{
+          border: '1px solid #ccc',
+          padding: '10px',
+          borderRadius: '5px',
+          maxWidth: '300px',
+          textAlign: 'center',
+        }}
+      >
+        <h2>4-Day Forecast for Lake Måsnaren</h2>
+        {forecast.map((day, index) => (
+          <div key={day.dt} style={{ marginBottom: '10px' }}>
+            <p>{formatDate(day.dt_txt, index)}</p>
+            <p>Temperature: {day.main.temp.toFixed(1)}°C</p>
+            <p>Wind Speed: {day.wind.speed.toFixed(1)} m/s</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
+  
 };
 
 export default WeatherCard;

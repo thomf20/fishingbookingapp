@@ -3,14 +3,24 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import BoatList from '../components/BoatList';
 import WeatherCard from '../components/WeatherCard';
+import Notification from '../components/Notification';
+import Divider from '../components/Divider';
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   return (
-    <div>
+    <div style={{ textAlign: 'center', padding: '20px' }}>
       <Header />
-      <h1>Welcome to the Fishing Booking App</h1>
+      
+      <Notification message="Welcome to the Fishing Booking App!" type="success" />
+      
+      <Divider />
+      
       <WeatherCard />
+      
+      <Divider />
+      
       <BoatList />
+      
       <Footer />
     </div>
   );

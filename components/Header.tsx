@@ -2,8 +2,13 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header>
-      <h1>Fishing Booking App</h1>
+    <header
+      style={{
+        textAlign: 'center', 
+        marginTop: '20px', 
+      }}
+    >
+      <h1>Fishing Boat Booking App</h1>
     </header>
   );
 };
